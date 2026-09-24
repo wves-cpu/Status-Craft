@@ -135,6 +135,15 @@ export default function PublicTrackPage() {
           <div className="track-timeline-section">
             <h3>{t('trackTitle')}</h3>
 
+            {order.statusNote && (
+              <div className="master-note-callout glass-panel">
+                <div className="note-badge-header">
+                  <IconWrench size={16} /> <strong>Комментарий мастера по диагностике / ремонту:</strong>
+                </div>
+                <p className="note-body-text">{order.statusNote}</p>
+              </div>
+            )}
+
             {order.status === 'bekor_qilindi' ? (
               <div className="cancelled-banner">
                 ❌ {t('status_bekor_qilindi')}

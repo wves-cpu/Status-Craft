@@ -60,13 +60,18 @@ router.get('/', async (req, res) => {
   }
 });
 
-// PATCH /api/orders/:id/status - statusni o'zgartirish
+// PATCH /api/orders/:id/status - statusni o'zgartirish ва излаб нота қўшиш
 router.patch('/:id/status', async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status, statusNote } = req.body;
+    const updateData = { status };
+    if (statusNote !== undefined) {
+      updateData.statusNote = statusNote;
+    }
+
     const order = await Order.findByIdAndUpdate(
       req.params.id,
-      { status },
+      updateData,
       { new: true, runValidators: true }
     );
     if (!order) {

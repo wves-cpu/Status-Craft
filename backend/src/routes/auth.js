@@ -112,5 +112,56 @@ router.get('/me', protect, async (req, res) => {
   res.json({ user: req.user });
 });
 
+// GET /api/auth/workshops - Public list of all service centers / workshops
+router.get('/workshops', async (req, res) => {
+  try {
+    const workshops = await User.find().select('-password').sort({ rating: -1, createdAt: -1 });
+    res.json(workshops);
+  } catch (err) {
+    res.status(500).json({ error: 'Сервисные центры временно недоступны' });
+  }
+});
+
+// PUT /api/auth/profile - Update master workshop profile
+router.put('/profile', protect, async (req, res) => {
+  try {
+    const { shopName, shopAddress, shopPhone, workHours, description, telegram } = req.body;
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'Мастер не найден' });
+    }
+
+    if (shopName) user.shopName = shopName;
+    if (shopAddress) user.shopAddress = shopAddress;
+    if (shopPhone) user.shopPhone = shopPhone;
+    if (workHours) user.workHours = workHours;
+    if (description) user.description = description;
+    if (telegram) user.telegram = telegram;
+
+    await user.save();
+
+    res.json({
+      message: 'Профиль сервиса успешно обновлен!',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        shopName: user.shopName,
+        shopAddress: user.shopAddress,
+        shopPhone: user.shopPhone,
+        workHours: user.workHours,
+        description: user.description,
+        telegram: user.telegram,
+        rating: user.rating,
+        reviewsCount: user.reviewsCount,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: ' Ошибка при обновлении профиля сервиса' });
+  }
+});
+
 module.exports = router;
 module.exports.protect = protect;

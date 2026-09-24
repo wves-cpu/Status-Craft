@@ -25,6 +25,39 @@ const userSchema = new mongoose.Schema(
       default: 'StatusCraft Repair Center',
       trim: true,
     },
+    shopAddress: {
+      type: String,
+      default: 'г. Ташкент, Чиланзарский район, ул. Катартал, 10',
+      trim: true,
+    },
+    shopPhone: {
+      type: String,
+      default: '+998 (99) 838 80 08',
+      trim: true,
+    },
+    workHours: {
+      type: String,
+      default: 'Пн-Вс: 09:00 - 20:00 (без выходных)',
+      trim: true,
+    },
+    description: {
+      type: String,
+      default: 'Профессиональный ремонт цифровой техники с расширенной гарантией до 12 месяцев.',
+      trim: true,
+    },
+    telegram: {
+      type: String,
+      default: '@blsssmm',
+      trim: true,
+    },
+    rating: {
+      type: Number,
+      default: 4.9,
+    },
+    reviewsCount: {
+      type: Number,
+      default: 128,
+    },
     role: {
       type: String,
       enum: ['technician', 'admin'],

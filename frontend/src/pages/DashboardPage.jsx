@@ -2,10 +2,12 @@ import { useState, useEffect, useMemo } from 'react';
 import OrderList from '../components/OrderList';
 import OrderForm from '../components/OrderForm';
 import OrderReceiptModal from '../components/OrderReceiptModal';
+import MasterProfileModal from '../components/MasterProfileModal';
+import StatusNoteModal from '../components/StatusNoteModal';
 import { fetchOrders, updateOrderStatus, deleteOrder } from '../api/ordersApi';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
-import { IconChart, IconWrench, IconCheck, IconThumbUp, IconSearch } from '../components/SvgIcons';
+import { IconChart, IconWrench, IconCheck, IconThumbUp, IconSearch, IconGear } from '../components/SvgIcons';
 import './DashboardPage.css';
 
 const FILTER_TABS = [
@@ -30,7 +32,11 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('all');
 
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState(null);
+
+  // Status Note Modal state
+  const [statusChangeTarget, setStatusChangeTarget] = useState(null); // { order, targetStatus }
 
   const loadOrders = async () => {
     setLoading(true);
@@ -49,10 +55,16 @@ export default function DashboardPage() {
     loadOrders();
   }, []);
 
-  const handleUpdateStatus = async (orderId, newStatus) => {
+  const handleOpenStatusModal = (order, targetStatus) => {
+    setStatusChangeTarget({ order, targetStatus });
+  };
+
+  const handleConfirmStatusChange = async (targetStatus, statusNote) => {
+    if (!statusChangeTarget) return;
     try {
-      const updated = await updateOrderStatus(orderId, newStatus);
-      setOrders((prev) => prev.map((o) => (o._id === orderId ? updated : o)));
+      const updated = await updateOrderStatus(statusChangeTarget.order._id, targetStatus, statusNote);
+      setOrders((prev) => prev.map((o) => (o._id === statusChangeTarget.order._id ? updated : o)));
+      setStatusChangeTarget(null);
     } catch (err) {
       alert('Statusni yangilashda xatolik yuz berdi');
     }
@@ -102,9 +114,14 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <button className="btn btn--primary btn-new-order" onClick={() => setShowOrderModal(true)}>
-          {t('dashNewOrder')}
-        </button>
+        <div className="dash-header-actions">
+          <button className="btn btn--secondary" onClick={() => setShowProfileModal(true)}>
+            <IconGear size={16} /> Настройки Сервиса
+          </button>
+          <button className="btn btn--primary btn-new-order" onClick={() => setShowOrderModal(true)}>
+            {t('dashNewOrder')}
+          </button>
+        </div>
       </div>
 
       {/* Metrics Summary Row */}
@@ -177,7 +194,7 @@ export default function DashboardPage() {
         ) : (
           <OrderList
             orders={filteredOrders}
-            onUpdateStatus={handleUpdateStatus}
+            onStatusChangeRequest={handleOpenStatusModal}
             onDeleteOrder={handleDeleteOrder}
             onPrintReceipt={(order) => setSelectedReceiptOrder(order)}
           />
@@ -192,6 +209,21 @@ export default function DashboardPage() {
             setShowOrderModal(false);
           }}
           onClose={() => setShowOrderModal(false)}
+        />
+      )}
+
+      {/* Master Profile Modal */}
+      {showProfileModal && (
+        <MasterProfileModal onClose={() => setShowProfileModal(false)} />
+      )}
+
+      {/* Status Note Modal */}
+      {statusChangeTarget && (
+        <StatusNoteModal
+          order={statusChangeTarget.order}
+          targetStatus={statusChangeTarget.targetStatus}
+          onConfirm={handleConfirmStatusChange}
+          onClose={() => setStatusChangeTarget(null)}
         />
       )}
 

@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       localStorage.setItem('statuscraft_token', token);
-      
+
       // Fetch profile
       axios.get(`${API_BASE_URL}/auth/me`)
         .then(res => {
@@ -34,17 +34,37 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
-    setToken(res.data.token);
-    setUser(res.data.user);
-    return res.data;
+    try {
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
+      setToken(res.data.token);
+      setUser(res.data.user);
+      return res.data;
+    } catch (err) {
+      const errorMsg = err.response?.data?.error || err.message || 'Ошибка подключения к серверу';
+      if (err.message === 'Network Error') {
+        throw new Error('Не удалось подключиться к серверу API. Проверьте подключение или бэкенд URL.');
+      }
+      throw new Error(errorMsg);
+    }
   };
 
   const register = async (name, email, password, shopName) => {
-    const res = await axios.post(`${API_BASE_URL}/auth/register`, { name, email, password, shopName });
-    setToken(res.data.token);
-    setUser(res.data.user);
-    return res.data;
+    try {
+      const res = await axios.post(`${API_BASE_URL}/auth/register`, { name, email, password, shopName });
+      setToken(res.data.token);
+      setUser(res.data.user);
+      return res.data;
+    } catch (err) {
+      const errorMsg = err.response?.data?.error || err.message || 'Ошибка подключения к серверу';
+      if (err.message === 'Network Error') {
+        throw new Error('Не удалось подключиться к серверу API. Проверьте подключение или бэкенд URL.');
+      }
+      throw new Error(errorMsg);
+    }
+  };
+
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser);
   };
 
   const logout = () => {
@@ -55,7 +75,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, updateUser, logout, isAuthenticated: !!token }}>
       {children}
     </AuthContext.Provider>
   );

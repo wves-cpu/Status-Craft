@@ -1,5 +1,5 @@
 import { useLanguage } from '../context/LanguageContext';
-import { IconPrint, IconTrash } from './SvgIcons';
+import { IconPrint, IconTrash, IconWrench } from './SvgIcons';
 
 const STATUS_OPTIONS = [
   'qabul_qilindi',
@@ -10,7 +10,7 @@ const STATUS_OPTIONS = [
   'bekor_qilindi',
 ];
 
-export default function OrderList({ orders, onUpdateStatus, onDeleteOrder, onPrintReceipt }) {
+export default function OrderList({ orders, onStatusChangeRequest, onDeleteOrder, onPrintReceipt }) {
   const { t } = useLanguage();
 
   if (!orders || orders.length === 0) {
@@ -41,12 +41,19 @@ export default function OrderList({ orders, onUpdateStatus, onDeleteOrder, onPri
                 <strong>{order.clientName}</strong>
               </td>
               <td>{order.clientPhone}</td>
-              <td className="desc-cell">{order.description}</td>
+              <td className="desc-cell">
+                <div>{order.description}</div>
+                {order.statusNote && (
+                  <div className="order-status-note-pill">
+                    <IconWrench size={12} /> {order.statusNote}
+                  </div>
+                )}
+              </td>
               <td>
                 <select
                   className={`status-select status-${order.status}`}
                   value={order.status}
-                  onChange={(e) => onUpdateStatus(order._id, e.target.value)}
+                  onChange={(e) => onStatusChangeRequest(order, e.target.value)}
                 >
                   {STATUS_OPTIONS.map((st) => (
                     <option key={st} value={st}>

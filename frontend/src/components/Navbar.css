@@ -64,7 +64,8 @@
   gap: 1.75rem;
 }
 
-.tech-nav-links a {
+.tech-nav-links a,
+.nav-btn-link {
   color: #cbd5e1;
   text-decoration: none;
   font-size: 0.9rem;
@@ -72,10 +73,15 @@
   padding: 4px 0;
   position: relative;
   transition: color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .tech-nav-links a:hover,
-.tech-nav-links a.active {
+.tech-nav-links a.active,
+.nav-btn-link:hover {
   color: #38bdf8;
 }
 
