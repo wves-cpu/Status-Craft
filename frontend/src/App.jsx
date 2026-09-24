@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PageLoader from './components/PageLoader';
 import LandingPage from './pages/LandingPage';
+import WorkshopsPage from './pages/WorkshopsPage';
 import ServicesPage from './pages/ServicesPage';
 import PricesPage from './pages/PricesPage';
 import AboutPage from './pages/AboutPage';
@@ -27,6 +28,7 @@ function AnimatedRoutes() {
     <div key={location.pathname} className="page-transition-wrapper">
       <Routes location={location}>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/workshops" element={<WorkshopsPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/prices" element={<PricesPage />} />
         <Route path="/about" element={<AboutPage />} />

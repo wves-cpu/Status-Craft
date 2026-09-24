@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
-import WorkshopsDrawer from './WorkshopsDrawer';
+import SidebarDrawer from './SidebarDrawer';
 import SubmitDeviceModal from './SubmitDeviceModal';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -13,7 +13,7 @@ export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
-  const [showWorkshopsDrawer, setShowWorkshopsDrawer] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   const handleLogout = () => {
@@ -25,6 +25,21 @@ export default function Navbar() {
     <>
       <header className="tech-navbar">
         <div className="tech-navbar-container">
+          {/* Hamburger Menu Toggle Button */}
+          <button
+            type="button"
+            className="btn-sidebar-toggle"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open Sidebar Menu"
+            title="Меню"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
           {/* Real Logo */}
           <Link to="/" className="tech-logo">
             <div className="logo-gear-box">
@@ -41,13 +56,9 @@ export default function Navbar() {
             <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
               {t('navHome')}
             </NavLink>
-            <button
-              type="button"
-              className="nav-btn-link"
-              onClick={() => setShowWorkshopsDrawer(true)}
-            >
-              🏬 Мастерские
-            </button>
+            <NavLink to="/workshops" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Мастерские
+            </NavLink>
             <NavLink to="/services" className={({ isActive }) => (isActive ? 'active' : '')}>
               {t('navServices')}
             </NavLink>
@@ -96,11 +107,10 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Public Workshops Drawer */}
-      <WorkshopsDrawer
-        isOpen={showWorkshopsDrawer}
-        onClose={() => setShowWorkshopsDrawer(false)}
-        onSelectSubmit={() => setShowSubmitModal(true)}
+      {/* Collapsible Side Drawer */}
+      <SidebarDrawer
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {/* Global Submit Modal */}

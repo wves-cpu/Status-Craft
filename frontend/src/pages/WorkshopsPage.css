@@ -1,0 +1,146 @@
+.workshops-fullpage-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.workshops-loading-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem;
+  color: #38bdf8;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.workshop-full-card {
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(13, 20, 36, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: all 0.25s ease;
+}
+
+.workshop-full-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.2);
+}
+
+.card-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.shop-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.shop-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+  flex-shrink: 0;
+}
+
+.workshop-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.master-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: #38bdf8;
+  margin-top: 4px;
+}
+
+.rating-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.workshop-bio {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.workshop-info-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.info-pillar-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-lbl {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.info-txt {
+  font-size: 0.88rem;
+  color: #f1f5f9;
+  margin-top: 2px;
+}
+
+.workshop-card-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    .btn {
+      width: 100%;
+    }
+  }
+}
