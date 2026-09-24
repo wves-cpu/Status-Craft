@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "StatusCraft - API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" }
+  ],
+  "item": [
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Buyurtma yaratish (to'g'ri)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"Aziz Karimov\",\n  \"clientPhone\": \"+998901234567\",\n  \"description\": \"Noutbuk yoqilmayapti\",\n  \"internalNotes\": \"Ehtimol quvvat blokida muammo\"\n}"
+        },
+        "url": "{{baseUrl}}/api/orders"
+      }
+    },
+    {
+      "name": "Buyurtma yaratish (majburiy maydon yo'q - 400 kutiladi)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientPhone\": \"+998901234567\"\n}"
+        },
+        "url": "{{baseUrl}}/api/orders"
+      }
+    },
+    {
+      "name": "Buyurtmalar ro'yxati",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/orders"
+      }
+    }
+  ]
+}
