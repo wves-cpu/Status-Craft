@@ -12,10 +12,11 @@ import {
   IconSearch,
   IconUser,
   IconShield,
+  IconCreditCard,
 } from './SvgIcons';
 import './SidebarDrawer.css';
 
-export default function SidebarDrawer({ isOpen, onClose }) {
+export default function SidebarDrawer({ isOpen, onClose, onOpenPayment }) {
   const { t } = useLanguage();
   const { user, isAuthenticated } = useAuth();
 
@@ -57,6 +58,18 @@ export default function SidebarDrawer({ isOpen, onClose }) {
             <IconGem size={18} className="sidebar-icon" />
             <span>{t('navPrices')}</span>
           </NavLink>
+
+          <button
+            type="button"
+            className="sidebar-item sidebar-btn-action"
+            onClick={() => {
+              onClose();
+              onOpenPayment?.();
+            }}
+          >
+            <IconCreditCard size={18} className="sidebar-icon" />
+            <span>Онлайн Оплата (Click / Payme / РФ)</span>
+          </button>
 
           <NavLink to="/about" className="sidebar-item" onClick={onClose}>
             <IconUsers size={18} className="sidebar-icon" />

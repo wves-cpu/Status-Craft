@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import SidebarDrawer from './SidebarDrawer';
 import SubmitDeviceModal from './SubmitDeviceModal';
+import PaymentModal from './PaymentModal';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
-import { IconGear, IconUser, IconSearch, IconShield } from './SvgIcons';
+import { IconGear, IconUser, IconSearch, IconShield, IconCreditCard } from './SvgIcons';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -15,6 +16,7 @@ export default function Navbar() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -31,7 +33,7 @@ export default function Navbar() {
             className="btn-sidebar-toggle"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open Sidebar Menu"
-            title="Меню"
+            title="Меню навигации"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="3" y1="6" x2="21" y2="6" />
@@ -51,31 +53,18 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Dedicated Standalone Nav Links */}
-          <nav className="tech-nav-links">
-            <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
-              {t('navHome')}
-            </NavLink>
-            <NavLink to="/workshops" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Мастерские
-            </NavLink>
-            <NavLink to="/services" className={({ isActive }) => (isActive ? 'active' : '')}>
-              {t('navServices')}
-            </NavLink>
-            <NavLink to="/prices" className={({ isActive }) => (isActive ? 'active' : '')}>
-              {t('navPrices')}
-            </NavLink>
-            <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>
-              {t('navAbout')}
-            </NavLink>
-            <NavLink to="/contacts" className={({ isActive }) => (isActive ? 'active' : '')}>
-              {t('navContacts')}
-            </NavLink>
-          </nav>
-
           {/* Right Actions */}
           <div className="tech-nav-actions">
             <LanguageSelector />
+
+            <button
+              type="button"
+              className="btn-track-icon"
+              onClick={() => setShowPaymentModal(true)}
+              title="Онлайн Оплата (Click / Payme / РФ)"
+            >
+              <IconCreditCard size={18} />
+            </button>
 
             <Link to="/track" className="btn-track-icon" title={t('trackTitle')}>
               <IconSearch size={18} />
@@ -111,11 +100,17 @@ export default function Navbar() {
       <SidebarDrawer
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        onOpenPayment={() => setShowPaymentModal(true)}
       />
 
       {/* Global Submit Modal */}
       {showSubmitModal && (
         <SubmitDeviceModal onClose={() => setShowSubmitModal(false)} />
+      )}
+
+      {/* Global Online Payment Modal */}
+      {showPaymentModal && (
+        <PaymentModal onClose={() => setShowPaymentModal(false)} />
       )}
     </>
   );

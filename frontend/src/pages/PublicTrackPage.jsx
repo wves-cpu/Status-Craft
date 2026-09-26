@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
+import PaymentModal from '../components/PaymentModal';
 import {
   IconSearch,
   IconClock,
@@ -11,6 +12,7 @@ import {
   IconThumbUp,
   IconUser,
   IconShield,
+  IconCreditCard,
 } from '../components/SvgIcons';
 import './PublicTrackPage.css';
 
@@ -33,6 +35,7 @@ export default function PublicTrackPage() {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const fetchTrackOrder = async (searchToken) => {
     if (!searchToken?.trim()) return;
@@ -174,7 +177,15 @@ export default function PublicTrackPage() {
           </div>
 
           <div className="track-support-footer">
-            <p>
+            <button
+              type="button"
+              className="btn btn--primary btn--full btn--pay-track"
+              onClick={() => setShowPaymentModal(true)}
+            >
+              <IconCreditCard size={18} /> Оплатить ремонт онлайн (Click / Payme / СБП / Visa)
+            </button>
+
+            <p style={{ marginTop: '1rem' }}>
               Возникли вопросы? Сверьтесь с мастером:{' '}
               <a href="tel:+998998388008" className="phone-link">
                 <IconPhone size={16} /> +998 (99) 838 80 08
@@ -182,6 +193,13 @@ export default function PublicTrackPage() {
             </p>
           </div>
         </div>
+      )}
+
+      {showPaymentModal && (
+        <PaymentModal
+          defaultToken={order?.trackingToken || ''}
+          onClose={() => setShowPaymentModal(false)}
+        />
       )}
     </div>
   );
