@@ -48,6 +48,11 @@ const orderSchema = new mongoose.Schema(
       index: true,
       default: () => crypto.randomBytes(16).toString('hex'),
     },
+    telegramChatId: {
+      type: String,
+      default: '',
+      trim: true,
+    },
   },
   { timestamps: true }
 );

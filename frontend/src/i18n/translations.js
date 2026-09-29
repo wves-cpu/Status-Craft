@@ -1,14 +1,17 @@
 export const translations = {
   ru: {
     // Header & Brand
-    brandName: "TechService",
-    brandSubtitle: "Ремонт техники — наша забота",
+    brandName: "StatusCraft",
+    brandSubtitle: "Ремонт техники & CRM",
     navHome: "Главная",
     navServices: "Услуги",
     navPrices: "Цены",
     navAbout: "О нас",
     navReviews: "Отзывы",
     navContacts: "Контакты",
+    navWorkshops: "Сервисные Центры",
+    navOnlinePayment: "Онлайн Оплата",
+    navTrackOrder: "Отследить заказ",
     navSubmitLead: "Оставить заявку",
     navMasterLogin: "Вход мастера",
 
@@ -247,14 +250,17 @@ export const translations = {
   },
   uz: {
     // Header & Brand
-    brandName: "TechService",
-    brandSubtitle: "Texnika ta'miri — bizning burchimiz",
+    brandName: "StatusCraft",
+    brandSubtitle: "Texnika ta'miri & CRM",
     navHome: "Bosh sahifa",
     navServices: "Xizmatlar",
     navPrices: "Narxlar",
     navAbout: "Biz haqimizda",
     navReviews: "Sharhlar",
     navContacts: "Kontaktlar",
+    navWorkshops: "Servis Markazlari",
+    navOnlinePayment: "Onlayn To'lov",
+    navTrackOrder: "Buyurtmani kuzatish",
     navSubmitLead: "Ariza qoldirish",
     navMasterLogin: "Master kirishi",
 
@@ -493,14 +499,17 @@ export const translations = {
   },
   en: {
     // Header & Brand
-    brandName: "TechService",
-    brandSubtitle: "Tech Repair — Our Mission",
+    brandName: "StatusCraft",
+    brandSubtitle: "Tech Repair & CRM",
     navHome: "Home",
     navServices: "Services",
     navPrices: "Prices",
     navAbout: "About",
     navReviews: "Reviews",
     navContacts: "Contacts",
+    navWorkshops: "Service Centers",
+    navOnlinePayment: "Online Payment",
+    navTrackOrder: "Track Order",
     navSubmitLead: "Submit Request",
     navMasterLogin: "Master Portal",
 

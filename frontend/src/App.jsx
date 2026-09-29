@@ -14,6 +14,8 @@ import SubmitLeadPage from './pages/SubmitLeadPage';
 import PublicTrackPage from './pages/PublicTrackPage';
 import DashboardPage from './pages/DashboardPage';
 import AuthPage from './pages/AuthPage';
+import PaymentPage from './pages/PaymentPage';
+import MasterProfilePage from './pages/MasterProfilePage';
 
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
@@ -35,6 +37,9 @@ function AnimatedRoutes() {
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/submit" element={<SubmitLeadPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/pay" element={<PaymentPage />} />
+        <Route path="/master-profile" element={<MasterProfilePage />} />
         <Route path="/track" element={<PublicTrackPage />} />
         <Route path="/track/:token" element={<PublicTrackPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />

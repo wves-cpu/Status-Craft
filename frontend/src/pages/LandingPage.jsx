@@ -25,6 +25,7 @@ import {
 } from '../components/SvgIcons';
 import RepairCostModal from '../components/RepairCostModal';
 import PublicTrackPage from './PublicTrackPage';
+import TechBackground from '../components/TechBackground';
 import './LandingPage.css';
 
 export default function LandingPage() {
@@ -41,6 +42,7 @@ export default function LandingPage() {
 
   return (
     <div className="landing-master-container">
+      <TechBackground />
       {/* 1. HERO SECTION */}
       <section className="hero-dark-block" id="hero">
         <div className="hero-grid-layout">

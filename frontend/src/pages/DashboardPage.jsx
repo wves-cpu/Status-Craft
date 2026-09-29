@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import OrderList from '../components/OrderList';
 import OrderForm from '../components/OrderForm';
 import OrderReceiptModal from '../components/OrderReceiptModal';
-import MasterProfileModal from '../components/MasterProfileModal';
 import StatusNoteModal from '../components/StatusNoteModal';
 import { fetchOrders, updateOrderStatus, deleteOrder } from '../api/ordersApi';
 import { useLanguage } from '../context/LanguageContext';
@@ -23,6 +23,7 @@ const FILTER_TABS = [
 export default function DashboardPage() {
   const { t } = useLanguage();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,6 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('all');
 
   const [showOrderModal, setShowOrderModal] = useState(false);
-  const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState(null);
 
   // Status Note Modal state
@@ -115,7 +115,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="dash-header-actions">
-          <button className="btn btn--secondary" onClick={() => setShowProfileModal(true)}>
+          <button className="btn btn--secondary" onClick={() => navigate('/master-profile')}>
             <IconGear size={16} /> Настройки Сервиса
           </button>
           <button className="btn btn--primary btn-new-order" onClick={() => setShowOrderModal(true)}>

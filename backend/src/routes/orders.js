@@ -1,5 +1,6 @@
 const express = require('express');
 const Order = require('../models/Order');
+const { notifyNewOrderToMasters, notifyStatusUpdateToClient } = require('../services/telegramBotService');
 
 const router = express.Router();
 
@@ -41,6 +42,12 @@ router.post('/', async (req, res) => {
       description,
       internalNotes,
     });
+
+    // Notify Telegram Masters
+    notifyNewOrderToMasters(order).catch((err) =>
+      console.error('Error sending telegram order alert:', err)
+    );
+
     res.status(201).json(order);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -77,6 +84,12 @@ router.patch('/:id/status', async (req, res) => {
     if (!order) {
       return res.status(404).json({ error: 'Buyurtma topilmadi' });
     }
+
+    // Notify Telegram Client
+    notifyStatusUpdateToClient(order).catch((err) =>
+      console.error('Error sending telegram status alert:', err)
+    );
+
     res.json(order);
   } catch (err) {
     res.status(400).json({ error: 'Statusni yangilashda xatolik' });
