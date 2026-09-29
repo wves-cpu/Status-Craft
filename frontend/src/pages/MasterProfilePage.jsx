@@ -7,7 +7,7 @@ import TechBackground from '../components/TechBackground';
 import './MasterProfilePage.css';
 
 export default function MasterProfilePage() {
-  const { user, updateUser, isAuthenticated } = useAuth();
+  const { user, updateUser, isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
 
   const [shopName, setShopName] = useState(user?.shopName || 'StatusCraft Repair Center');
@@ -21,15 +21,33 @@ export default function MasterProfilePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const handleQuickDemoLogin = async () => {
+    try {
+      await login('master@statuscraft.uz', '123456');
+    } catch (err) {
+      navigate('/auth');
+    }
+  };
+
   if (!isAuthenticated) {
     return (
-      <div className="profile-page-container container">
-        <div className="glass-panel text-center" style={{ padding: '3rem' }}>
-          <h2>Доступ ограничен</h2>
-          <p>Пожалуйста, войдите в систему как мастер.</p>
-          <button onClick={() => navigate('/auth')} className="btn btn--primary" style={{ marginTop: '1rem' }}>
-            Войти в Кабинет
-          </button>
+      <div className="master-profile-page-container">
+        <TechBackground />
+        <div className="master-profile-content container">
+          <div className="glass-panel text-center" style={{ padding: '3.5rem 2rem', maxWidth: 600, margin: '4rem auto' }}>
+            <h2 style={{ fontSize: '1.8rem', color: '#fff', marginBottom: '0.75rem' }}>Кабинет Управления Мастерской</h2>
+            <p style={{ color: '#94a3b8', marginBottom: '1.75rem' }}>
+              Вы не авторизованы. Войдите с логином мастера или воспользуйтесь быстрой демо-авторизацией.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button onClick={handleQuickDemoLogin} className="btn btn--primary">
+                ⚡ Быстрый Вход Мастера
+              </button>
+              <button onClick={() => navigate('/auth')} className="btn btn--secondary">
+                Форма входа / Регистрация
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

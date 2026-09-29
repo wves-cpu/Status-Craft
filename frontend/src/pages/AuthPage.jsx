@@ -56,6 +56,19 @@ export default function AuthPage() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    setSubmitting(true);
+    setError('');
+    try {
+      await login('master@statuscraft.uz', '123456');
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="auth-master-page">
       <TechBackground />
@@ -181,6 +194,18 @@ export default function AuthPage() {
             <button type="submit" className="btn btn--primary btn--full" disabled={submitting}>
               {submitting ? 'Yuklanmoqda...' : isRegister ? t('authRegisterBtn') : t('authLoginBtn')}
             </button>
+
+            {!isRegister && (
+              <button
+                type="button"
+                className="btn btn--secondary btn--full"
+                style={{ marginTop: '0.85rem' }}
+                onClick={handleDemoLogin}
+                disabled={submitting}
+              >
+                ⚡ Быстрый Демо-Вход Мастера
+              </button>
+            )}
           </form>
 
           <div className="auth-footer">

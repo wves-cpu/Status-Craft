@@ -22,7 +22,7 @@ const FILTER_TABS = [
 
 export default function DashboardPage() {
   const { t } = useLanguage();
-  const { user } = useAuth();
+  const { user, isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
 
   const [orders, setOrders] = useState([]);
@@ -36,7 +36,7 @@ export default function DashboardPage() {
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState(null);
 
   // Status Note Modal state
-  const [statusChangeTarget, setStatusChangeTarget] = useState(null); // { order, targetStatus }
+  const [statusChangeTarget, setStatusChangeTarget] = useState(null);
 
   const loadOrders = async () => {
     setLoading(true);
@@ -105,6 +105,17 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-container">
+      {!isAuthenticated && (
+        <div className="dash-demo-banner glass-panel" style={{ background: 'rgba(2, 132, 199, 0.15)', border: '1px solid #0284c7', padding: '1rem 1.5rem', borderRadius: 14, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <strong style={{ color: '#fff', fontSize: '1rem' }}>💡 Вы просматриваете Панель Мастера в демонстрационном режиме</strong>
+            <p style={{ color: '#cbd5e1', fontSize: '0.88rem', margin: 0 }}>Войдите как Мастер, чтобы привязать профиль и Telegram-бота к вашему сервисному центру.</p>
+          </div>
+          <button className="btn btn--primary" onClick={() => login('master@statuscraft.uz', '123456')}>
+            ⚡ Авторизоваться под Демо-Мастером
+          </button>
+        </div>
+      )}
       {/* Header Bar */}
       <div className="dashboard-header-bar">
         <div>
